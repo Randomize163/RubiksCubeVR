@@ -129,6 +129,11 @@ namespace RubiksCubeSolverCS
             }
         }
 
+        public void DoMoves(List<Move> moves)
+        {
+            moves.ForEach(m => DoMove(m));
+        }
+
         public bool CrossIsSolved()
         {
             if (cube[1, 0] == 0 && cube[3, 0] == 0 && cube[5, 0] == 0 && cube[7, 0] == 0 && cube[7, 2] == 2 && cube[7, 3] == 3 && cube[7, 4] == 4 && cube[7, 5] == 5)
@@ -139,19 +144,29 @@ namespace RubiksCubeSolverCS
             return false;
         }
 
-        public void ShuffleCube(uint movesCount)
+        public static List<Move> GenerateRandomShuffle(uint movesCount)
         {
+            List<Move> moves = new List<Move>();
+
             string movesVariants = "LRUDFB";
-            string moves = "";
 
             Random rnd = new Random();
 
             for (uint i = 0; i < movesCount; i++)
             {
-                moves = moves + movesVariants[rnd.Next(0, movesVariants.Length)].ToString();
+                moves.Add(MoveMethods.CharToMove(movesVariants[rnd.Next(0, movesVariants.Length)]));
             }
 
+            return moves;
+        }
+
+        public List<Move> ShuffleCube(uint movesCount)
+        {
+            List<Move> moves = GenerateRandomShuffle(movesCount);
+
             DoMoves(moves);
+
+            return moves;
         }
 
         /*public List<Move> SolveCross()
@@ -1333,15 +1348,425 @@ namespace RubiksCubeSolverCS
         public bool MidLayerIsSolved()
         {
             if (cube[3, 2] != 2 || cube[5, 2] != 2)
-                return true;
-            else if (cube[3, 3] != 3 || cube[5, 3] != 3)
-                return true;
-            else if (cube[3, 4] != 4 || cube[5, 4] != 4)
-                return true;
-            else if (cube[3, 5] != 5 || cube[5, 5] != 5)
-                return true;
-            else
                 return false;
+            else if (cube[3, 3] != 3 || cube[5, 3] != 3)
+                return false;
+            else if (cube[3, 4] != 4 || cube[5, 4] != 4)
+                return false;
+            else if (cube[3, 5] != 5 || cube[5, 5] != 5)
+                return false;
+            else
+                return true;
+        }
+
+        //
+        // OLL
+        //
+
+        bool IsYellowCross()
+        {
+            if (cube[1, 1] == 1 && cube[3, 1] == 1 && cube[5, 1] == 1 && cube[7, 1] == 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        int OLLFindEdges()
+        {
+
+            int[] topLayer = new int[9];
+
+            if (cube[0, 1] == 1)
+            {
+                topLayer[0] = 1;
+            }
+            if (cube[1, 1] == 1)
+            {
+                topLayer[1] = 1;
+            }
+            if (cube[2, 1] == 1)
+            {
+                topLayer[2] = 1;
+            }
+            if (cube[3, 1] == 1)
+            {
+                topLayer[3] = 1;
+            }
+            if (cube[4, 1] == 1)
+            {
+                topLayer[4] = 1;
+            }
+            if (cube[5, 1] == 1)
+            {
+                topLayer[5] = 1;
+            }
+            if (cube[6, 1] == 1)
+            {
+                topLayer[6] = 1;
+            }
+            if (cube[7, 1] == 1)
+            {
+                topLayer[7] = 1;
+            }
+            if (cube[8, 1] == 1)
+            {
+                topLayer[8] = 1;
+            }
+
+            if (topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1)
+            {
+                return 1;
+            }
+            else if (topLayer[5] == 1 && topLayer[7] == 1)
+            {
+                return 2;
+            }
+            else if (topLayer[1] != 1 && topLayer[3] != 1 && topLayer[5] != 1 && topLayer[7] != 1)
+                return 3;
+            else
+                return 0;
+
+        }
+
+        public bool IsOLLSolved()
+        {
+            for (int i = 0; i < 9; ++i)
+            {
+                if (cube[i, 1] != 1)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public List<Move> SolveOLLCaseMoves(int state)
+        {
+            List<Move> moves = new List<Move>();
+
+            switch (state)
+            {
+                case 1:
+                    AppendAndDoMoves(ref moves, "FRURRRUUUFFF");
+                    moves.AddRange(SolveOLLMovesHelper());
+                    break;
+                case 2:
+                    AppendAndDoMoves(ref moves, "BULUUULLLBBB");
+                    moves.AddRange(SolveOLLMovesHelper());
+                    break;
+                case 3:
+                    AppendAndDoMoves(ref moves, "FRURRRUUUFFFBULUUULLLBBB");
+                    moves.AddRange(SolveOLLMovesHelper());
+                    break;
+                case 4:
+                    AppendAndDoMoves(ref moves, "RURRRURUURRR");
+                    break;
+                case 5:
+                    AppendAndDoMoves(ref moves, "RRRUUURUUURRRUUR");
+                    break;
+                case 6:
+                    AppendAndDoMoves(ref moves, "FRURRRUUURURRRUUURURRRUUUFFF");
+                    break;
+                case 7:
+                    AppendAndDoMoves(ref moves, "RUURRUUURRUUURRUUR");
+                    break;
+                case 8:
+                    AppendAndDoMoves(ref moves, "RRDRRRUURDDDRRRUURRR");
+                    break;
+                case 9:
+                    AppendAndDoMoves(ref moves, "LFRRRFFFLLLFRFFF");
+                    break;
+                case 10:
+                    AppendAndDoMoves(ref moves, "FFFLFRRRFFFLLLFR");
+                    break;
+            }
+
+            return moves;
+        }
+
+        public List<Move> SolveOLLMoves()
+        {
+            int[,] copyCube = CopyCube();
+
+            List<Move> moves = SolveOLLMovesHelper();
+
+            cube = copyCube;
+
+            return OptimizeMoves(moves);
+        }
+
+        public List<Move> SolvePLLMoves()
+        {
+            int[,] copyCube = CopyCube();
+
+            List<Move> moves = PllAdjustUFace();
+
+            while (!PllCheckCorners())
+            {
+                moves.AddRange(PllSolveCornersMoves());
+                moves.AddRange(PllAdjustUFace());
+            }
+
+            while (!PllCheckEdges())
+            {
+                moves.AddRange(PllSolveEdgesMoves());
+            }
+
+            cube = copyCube;
+
+            return OptimizeMoves(moves);
+        }
+
+        List<Move> PllSolveCornersMoves()
+        {
+            List<Move> moves = new List<Move>();
+
+            if (cube[2, 2] == 4 && cube[0, 3] == 5 && cube[2, 3] == 2
+            && cube[0, 4] == 3 && cube[2, 4] == 3 && cube[0, 5] == 4)
+            {
+                AppendAndDoMoves(ref moves, "RRRFRRRBBRFFFRRRBBRR");
+            }
+            else if (cube[2, 2] == 4 && cube[0, 3] == 5 && cube[2, 3] == 3
+            && cube[0, 4] == 4 && cube[2, 4] == 2 && cube[0, 5] == 3)
+            {
+                AppendAndDoMoves(ref moves, "RBBBRRRFRBRRRFFLLLBLFLLLBBBL");
+            }
+            else
+            {
+                AppendAndDoMoves(ref moves, "RRRFRRRBBRFFFRRRBBRR");
+            }
+
+            return moves;
+        }
+
+        List<Move> PllSolveEdgesMoves()
+        {
+            List<Move> moves = new List<Move>();
+
+            if (cube[1, 2] == 5 && cube[1, 3] == 2 && cube[1, 4] == 4 && cube[1, 5] == 3)
+            {
+                AppendAndDoMoves(ref moves, "RRURURRRUUURRRUUURRRURRR");
+            }
+            else if (cube[1, 2] == 3 && cube[1, 3] == 5 && cube[1, 4] == 4 && cube[1, 5] == 2)
+            {
+                AppendAndDoMoves(ref moves, "RUUURURURUUURRRUUURR");
+            }
+            else if (cube[1, 2] == 4 && cube[1, 3] == 5 && cube[1, 4] == 2 && cube[1, 5] == 3)
+            {
+                AppendAndDoMoves(ref moves, "RRLLDRRLLUURRLLDRRLL");
+            }
+            else if (cube[1, 2] == 3 && cube[1, 3] == 2 && cube[1, 4] == 5 && cube[1, 5] == 4)
+            {
+                AppendAndDoMoves(ref moves, "URRRUUURUUURURUUURRRURURRUUURRRU");
+            }
+            else
+            {
+                AppendAndDoMoves(ref moves, "RRURURRRUUURRRUUURRRURRR");
+                moves.AddRange(PllAdjustUFace());
+                AppendAndDoMoves(ref moves, "RRLLDRRLLUURRLLDRRLL");
+                AppendAndDoMoves(ref moves, "RRURURRRUUURRRUUURRRURRR");
+                moves.AddRange(PllAdjustUFace());
+            }
+
+            return moves;
+        }
+
+        bool PllCheckEdges()
+        {
+            if (cube[1, 2] == 2 && cube[1, 3] == 3 && cube[1, 4] == 4 && cube[1, 5] == 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        bool PllCheckCorners()
+        {
+            if (cube[0, 2] != 2 || cube[2, 2] != 2 || cube[0, 3] != 3 || cube[2, 3] != 3 || cube[0, 4] != 4 || cube[2, 4] != 4 || cube[0, 5] != 5 || cube[2, 5] != 5)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+
+
+        List<Move> PllAdjustUFace()
+        {
+            List<Move> moves = new List<Move>();
+
+            while (cube[2, 5] != 5 || cube[0, 2] != 2)
+            {
+                AppendAndDoMoves(ref moves, "U");
+            }
+
+            return moves;
+        }
+
+        List<Move> SolveOLLMovesHelper()
+        {
+            List<Move> moves = new List<Move>();
+
+            if (!IsYellowCross())
+            {
+                int state = OLLFindEdges();
+                while (state == 0)
+                {
+                    AppendAndDoMoves(ref moves, "U");
+                    state = OLLFindEdges();
+                }
+
+                moves.AddRange(SolveOLLCaseMoves(state));
+            }
+
+            if (!IsOLLSolved())
+            {
+                int state = OLLFindState();
+                while (state == 0)
+                {
+                    AppendAndDoMoves(ref moves, "U");
+                    state = OLLFindState();
+                }
+                moves.AddRange(SolveOLLCaseMoves(state));
+            }
+
+            return OptimizeMoves(moves);
+        }
+
+        int OLLFindState()
+        {
+            int[] topLayer = new int[9];
+            int[] redSide = new int[3];
+            int[] greenSide = new int[3];
+            int[] orangeSide = new int[3];
+            int[] blueSide = new int[3];
+
+            if (cube[0, 1] == 1)
+            {
+                topLayer[0] = 1;
+            }
+            if (cube[1, 1] == 1)
+            {
+                topLayer[1] = 1;
+            }
+            if (cube[2, 1] == 1)
+            {
+                topLayer[2] = 1;
+            }
+            if (cube[3, 1] == 1)
+            {
+                topLayer[3] = 1;
+            }
+            if (cube[4, 1] == 1)
+            {
+                topLayer[4] = 1;
+            }
+            if (cube[5, 1] == 1)
+            {
+                topLayer[5] = 1;
+            }
+            if (cube[6, 1] == 1)
+            {
+                topLayer[6] = 1;
+            }
+            if (cube[7, 1] == 1)
+            {
+                topLayer[7] = 1;
+            }
+            if (cube[8, 1] == 1)
+            {
+                topLayer[8] = 1;
+            }
+            //red layer top side
+            if (cube[0, 2] == 1)
+            {
+                redSide[0] = 1;
+            }
+            if (cube[1, 2] == 1)
+            {
+                redSide[1] = 1;
+            }
+            if (cube[2, 2] == 1)
+            {
+                redSide[2] = 1;
+            }
+            //green
+            if (cube[0, 3] == 1)
+            {
+                greenSide[0] = 1;
+            }
+            if (cube[1, 3] == 1)
+            {
+                greenSide[1] = 1;
+            }
+            if (cube[2, 3] == 1)
+            {
+                greenSide[2] = 1;
+            }
+
+            if (cube[0, 4] == 1)
+            {
+                orangeSide[0] = 1;
+            }
+            if (cube[1, 4] == 1)
+            {
+                orangeSide[1] = 1;
+            }
+            if (cube[2, 4] == 1)
+            {
+                orangeSide[2] = 1;
+            }
+
+            if (cube[0, 5] == 1)
+            {
+                blueSide[0] = 1;
+            }
+            if (cube[1, 5] == 1)
+            {
+                blueSide[1] = 1;
+            }
+            if (cube[2, 5] == 1)
+            {
+                blueSide[2] = 1;
+            }
+
+            if (topLayer[0] != 1 && topLayer[1] == 1 && topLayer[2] != 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] == 1 && topLayer[7] == 1 && topLayer[8] != 1 && redSide[2] == 1 && greenSide[2] == 1 && orangeSide[2] == 1)
+            {
+                return 4;
+            }
+            else if (topLayer[0] == 1 && topLayer[1] == 1 && topLayer[2] != 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] != 1 && topLayer[7] == 1 && topLayer[8] != 1 && redSide[0] == 1 && greenSide[0] == 1 && orangeSide[0] == 1)
+            {
+                return 5;
+            }
+            else if (topLayer[0] != 1 && topLayer[1] == 1 && topLayer[2] != 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] != 1 && topLayer[7] == 1 && topLayer[8] != 1 && redSide[0] == 1 && redSide[2] == 1 && orangeSide[0] == 1 && orangeSide[2] == 1)
+            {
+                return 6;
+            }
+            else if (topLayer[0] != 1 && topLayer[1] == 1 && topLayer[2] != 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] != 1 && topLayer[7] == 1 && topLayer[8] != 1 && redSide[2] == 1 && orangeSide[0] == 1 && blueSide[0] == 1 && blueSide[2] == 1)
+            {
+                return 7;
+            }
+            else if (topLayer[0] == 1 && topLayer[1] == 1 && topLayer[2] == 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] != 1 && topLayer[7] == 1 && topLayer[8] != 1 && redSide[0] == 1 && redSide[2] == 1)
+            {
+                return 8;
+            }
+            else if (topLayer[0] != 1 && topLayer[1] == 1 && topLayer[2] == 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] != 1 && topLayer[7] == 1 && topLayer[8] == 1 && redSide[0] == 1 && orangeSide[2] == 1)
+            {
+                return 9;
+            }
+            else if (topLayer[0] != 1 && topLayer[1] == 1 && topLayer[2] == 1 && topLayer[3] == 1 && topLayer[4] == 1 && topLayer[5] == 1 && topLayer[6] == 1 && topLayer[7] == 1 && topLayer[8] != 1 && redSide[2] == 1 && blueSide[0] == 1)
+            {
+                return 10;
+            }
+            else
+            {
+                return 0;
+            }
+
         }
     }
 }

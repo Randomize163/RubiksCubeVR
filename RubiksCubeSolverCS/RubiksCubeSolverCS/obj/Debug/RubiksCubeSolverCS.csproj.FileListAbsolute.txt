@@ -4,3 +4,9 @@ C:\alexgip\Rubik-master\RubiksCubeSolverCS\RubiksCubeSolverCS\bin\Debug\RubiksCu
 C:\alexgip\Rubik-master\RubiksCubeSolverCS\RubiksCubeSolverCS\obj\Debug\RubiksCubeSolverCS.csprojResolveAssemblyReference.cache
 C:\alexgip\Rubik-master\RubiksCubeSolverCS\RubiksCubeSolverCS\obj\Debug\RubiksCubeSolverCS.exe
 C:\alexgip\Rubik-master\RubiksCubeSolverCS\RubiksCubeSolverCS\obj\Debug\RubiksCubeSolverCS.pdb
+D:\CubeProject\RubiksCubeVR\RubiksCubeSolverCS\RubiksCubeSolverCS\bin\Debug\RubiksCubeSolverCS.exe.config
+D:\CubeProject\RubiksCubeVR\RubiksCubeSolverCS\RubiksCubeSolverCS\obj\Debug\RubiksCubeSolverCS.exe
+D:\CubeProject\RubiksCubeVR\RubiksCubeSolverCS\RubiksCubeSolverCS\obj\Debug\RubiksCubeSolverCS.pdb
+D:\CubeProject\RubiksCubeVR\RubiksCubeSolverCS\RubiksCubeSolverCS\bin\Debug\RubiksCubeSolverCS.exe
+D:\CubeProject\RubiksCubeVR\RubiksCubeSolverCS\RubiksCubeSolverCS\bin\Debug\RubiksCubeSolverCS.pdb
+D:\CubeProject\RubiksCubeVR\RubiksCubeSolverCS\RubiksCubeSolverCS\obj\Debug\RubiksCubeSolverCS.csprojResolveAssemblyReference.cache

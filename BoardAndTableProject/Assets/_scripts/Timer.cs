@@ -4,48 +4,35 @@ using System;
 
 public class Timer : MonoBehaviour {
 
-	public GUIStyle titleStyle;
-	public GUIStyle timeStyle;
+    private float startTime;
+    private bool started;
 
-	public int top = 0;
-	public int left = 0;
+    private void Start()
+    {
+        GetComponent<TextMesh>().text = "00:00.00";
+        started = false;
+    }
 
-	private string buttonText = "Play";
-	private bool running = false;
+    void Update()
+    {
+        if (started) return;
 
-	private float ticks = 0;
-	private int hour = 0;
-	private int minute = 0;
-	private int second = 0;
+        float t = Time.time - startTime;
+        string minutes = ((int)t / 60).ToString();
+        string seconds = (t % 60).ToString("f2");
 
-	// Update is called once per frame
-	void Update ()
-	{
-		if (running)
-		{
-			ticks += Time.deltaTime;
-			second = (int) ticks % 60;
-			minute = (int) ticks / 60;
-			hour = (int) (ticks / 60) / 60;
-		}
-	}
+        GetComponent<TextMesh>().text = minutes + ":" + seconds;
+    }
 
-	void OnGUI()
-	{
-		GUI.Label(new Rect(left + 0, top + 0, 100, 25), "Time Elapsed", titleStyle);
-		GUI.Label (
-			new Rect (left + 0, top + 15, 100, 25), 
-			hour.ToString("00") + ":" + minute.ToString("00") + ":" + second.ToString("00"),
-			timeStyle
-		);
+    public void StartTimer()
+    {
+        started = true;
+        startTime = Time.time;
+    }
 
-		if (GUI.Button (new Rect (left + 20, top + 40, 60, 25), buttonText))
-		{
-			running = !running;
-			if(running)
-				buttonText = "Stop";
-			else
-				buttonText = "Play";
-		}
-	}
+    public void StopTimer()
+    {
+        started = false;
+    }
+
 }

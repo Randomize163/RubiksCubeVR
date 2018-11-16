@@ -1,6 +1,0 @@
-D:\CubeProject\projectIntefaces\projectIntefaces\bin\Debug\projectIntefaces.exe.config
-D:\CubeProject\projectIntefaces\projectIntefaces\bin\Debug\projectIntefaces.exe
-D:\CubeProject\projectIntefaces\projectIntefaces\bin\Debug\projectIntefaces.pdb
-D:\CubeProject\projectIntefaces\projectIntefaces\obj\Debug\projectIntefaces.csprojResolveAssemblyReference.cache
-D:\CubeProject\projectIntefaces\projectIntefaces\obj\Debug\projectIntefaces.exe
-D:\CubeProject\projectIntefaces\projectIntefaces\obj\Debug\projectIntefaces.pdb

@@ -15,7 +15,8 @@ namespace projectIntefaces
             cc.DoMove(Move.L);
             Debug.Assert(cc.GetMoves().Count == 1);
 
-            Console.WriteLine("Hello");
+            TestCubeAlgorithm testCubeAlgorithm = new TestCubeAlgorithm();
+            testCubeAlgorithm.RunTest();
         }
     }
 }

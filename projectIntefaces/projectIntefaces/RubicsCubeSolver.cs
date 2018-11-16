@@ -1027,32 +1027,58 @@ namespace RubiksCubeSolverCS
             return OptimizeMoves(moves);
         }
 
+        private bool WhiteRedBlueCornerOnPlace()
+        {
+            return cube[6, 2] == 2 && cube[8, 5] == 5 && cube[0, 0] == 0;
+        }
+
+        private bool WhiteRedGreenCornerOnPlace()
+        {
+            return cube[8, 2] == 2 && cube[6, 3] == 3 && cube[2, 0] == 0;
+        }
+
+        private bool WhiteOrangeBlueCornerOnPlace()
+        {
+            return cube[6, 5] == 5 && cube[8, 4] == 4 && cube[6, 0] == 0;
+        }
+
+        private bool WhiteOrangeGreenCornerOnPlace()
+        {
+            return cube[8, 3] == 3 && cube[6, 4] == 4 && cube[8, 0] == 0;
+        }
+
+        private bool WhiteRedBlueCornerIsFree()
+        {
+            return cube[6, 2] != 0 && cube[8, 5] != 0 && cube[0, 0] != 0;
+        }
+
+        private bool WhiteRedGreenCornerIsFree()
+        {
+            return cube[8, 2] != 0 && cube[6, 3] != 0 && cube[2, 0] != 0;
+        }
+
+        private bool WhiteOrangeBlueCornerIsFree()
+        {
+            return cube[6, 5] != 0 && cube[8, 4] != 0 && cube[6, 0] != 0;
+        }
+
+        private bool WhiteOrangeGreenCornerIsFree()
+        {
+            return cube[8, 3] != 0 && cube[6, 4] != 0 && cube[8, 0] != 0;
+        }
+
         public bool WhiteCornersOnTop()
         {
-            if (cube[0, 0] != 0 && cube[2, 0] != 0 && cube[6, 0] != 0 && cube[8, 0] != 0
-              && cube[6, 2] != 0 && cube[8, 2] != 0 && cube[6, 3] != 0 && cube[8, 3] != 0
-              && cube[6, 4] != 0 && cube[8, 4] != 0 && cube[6, 5] != 0 && cube[8, 5] != 0)
-            {
-
-                return true;
-            }
-
-            if (cube[0, 0] == 0 && cube[2, 0] == 0 && cube[6, 0] == 0 && cube[8, 0] == 0)
-            {
-                return true;
-            }
-
-            return false;
+            return (WhiteOrangeBlueCornerIsFree() || WhiteOrangeBlueCornerOnPlace()) &&
+                (WhiteOrangeGreenCornerIsFree() || WhiteOrangeGreenCornerOnPlace()) &&
+                (WhiteRedBlueCornerIsFree() || WhiteRedBlueCornerOnPlace()) &&
+                (WhiteRedGreenCornerIsFree() || WhiteRedGreenCornerOnPlace());
         }
 
         public bool CornersAreSolved()
         {
-            if (cube[0, 0] == 0 && cube[2, 0] == 0 && cube[6, 0] == 0 && cube[8, 0] == 0)
-            {
-                return true;
-            }
-
-            return false;
+            return WhiteOrangeBlueCornerOnPlace() && WhiteOrangeGreenCornerOnPlace() &&
+                 WhiteRedBlueCornerOnPlace() && WhiteRedGreenCornerOnPlace();
         }
 
         public List<Move> SolveMidLayerMoves()

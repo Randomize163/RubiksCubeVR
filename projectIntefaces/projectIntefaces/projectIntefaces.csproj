@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>projectIntefaces</RootNamespace>
     <AssemblyName>projectIntefaces</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,8 +46,11 @@
   <ItemGroup>
     <Compile Include="FreestyleAC.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="TestCubeAlgorithm.cs" />
     <Compile Include="IActionController.cs" />
     <Compile Include="IBoardController.cs" />
+    <Compile Include="RubicsCubeSolver.cs" />
+    <Compile Include="SimpleCubeAlgorithm.cs" />
     <Compile Include="ICubeAlgorithm.cs" />
     <Compile Include="ICubeController.cs" />
     <Compile Include="ICubeModel.cs" />

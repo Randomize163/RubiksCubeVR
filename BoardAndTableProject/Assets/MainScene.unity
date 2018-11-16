@@ -154,7 +154,7 @@ BoxCollider:
   m_GameObject: {fileID: 94495189}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 70, y: 10, z: 1}
   m_Center: {x: 32.75001, y: -11.589844, z: 0}
@@ -778,6 +778,7 @@ MonoBehaviour:
   index: 0
   numInsrtuctions: 0
   numCompleteInstructions: 0
+  anim: {fileID: 0}
 --- !u!1001 &1423406405
 Prefab:
   m_ObjectHideFlags: 0
@@ -958,7 +959,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1477773436}
   m_LocalRotation: {x: -0, y: -0.22843316, z: -0, w: 0.97355956}
-  m_LocalPosition: {x: 0.134, y: 0.848, z: -1.322}
+  m_LocalPosition: {x: -0.209, y: 0.607, z: -0.632}
   m_LocalScale: {x: 0.06771025, y: 0.05756908, z: 0.7722308}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1168,7 +1169,7 @@ Prefab:
         type: 2}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a8a5c3600c3105847932401c9f1d365d, type: 2}
+      objectReference: {fileID: 9100000, guid: e1f2e166dce05e744b52f7c8b924a6b2, type: 2}
     - target: {fileID: 118612, guid: affd85d75c3c8e54b802be2df6f1770f, type: 2}
       propertyPath: m_Name
       value: Mainboard
@@ -1455,6 +1456,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114212705864564454, guid: affd85d75c3c8e54b802be2df6f1770f, type: 2}
+    - {fileID: 114471678509370170, guid: affd85d75c3c8e54b802be2df6f1770f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: affd85d75c3c8e54b802be2df6f1770f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1619792834
@@ -1556,7 +1558,7 @@ GameObject:
   - component: {fileID: 1746247080}
   m_Layer: 0
   m_Name: Timer
-  m_TagString: Untagged
+  m_TagString: Timer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

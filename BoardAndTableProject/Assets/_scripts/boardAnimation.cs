@@ -14,6 +14,10 @@ public class boardAnimation : MonoBehaviour, IBoardController {
     string done = "DONE!";
     public Animator anim;
     Text[] texts;
+    Text description;
+
+    // DEBUG!!!
+    GameController controller;
 
     // Use this for initialization
     void Start() {
@@ -22,6 +26,7 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         numCompleteInstructions = 0;
         anim = GetComponent<Animator>();
         texts = GetComponentsInChildren<Text>();
+        description = texts[5];
 
         /*
         texts[0].text = "L";
@@ -48,16 +53,68 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         */
 
         numInsrtuctions = instructions.Count;
+
     }
 
 	// Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.S))
+
+
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            board.MakeMove("L");
-        }*/
+            if(controller == null)
+            {
+                MainController mc = (MainController)FindObjectOfType(typeof(MainController));
+                controller = mc.game;
+            }
+            controller.OnMove(Move.L);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (controller == null)
+            {
+                MainController mc = (MainController)FindObjectOfType(typeof(MainController));
+                controller = mc.game;
+            }
+            controller.OnMove(Move.R);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (controller == null)
+            {
+                MainController mc = (MainController)FindObjectOfType(typeof(MainController));
+                controller = mc.game;
+            }
+            controller.OnMove(Move.D);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (controller == null)
+            {
+                MainController mc = (MainController)FindObjectOfType(typeof(MainController));
+                controller = mc.game;
+            }
+            controller.OnMove(Move.U);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (controller == null)
+            {
+                MainController mc = (MainController)FindObjectOfType(typeof(MainController));
+                controller = mc.game;
+            }
+            controller.OnMove(Move.F);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (controller == null)
+            {
+                MainController mc = (MainController)FindObjectOfType(typeof(MainController));
+                controller = mc.game;
+            }
+            controller.OnMove(Move.B);
+        }
     }
 
     public void UpdateInstructions(List<Move> moves)
@@ -69,10 +126,11 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         }
         numInsrtuctions = instructions.Count;
         numCompleteInstructions = 0;
+        index = 0;
         // fill first instructions
         for (int i = 0; i < Math.Min(5, numInsrtuctions); i++)
         {
-            texts[index].text = instructions[index];
+            texts[i].text = instructions[i];
         }
     }
 
@@ -84,6 +142,7 @@ public class boardAnimation : MonoBehaviour, IBoardController {
 
         if (index >= 5 || numCompleteInstructions >= numInsrtuctions)
         {
+            /*
             if (numCompleteInstructions >= numInsrtuctions)
             {
                 anim.enabled = false;
@@ -94,8 +153,10 @@ public class boardAnimation : MonoBehaviour, IBoardController {
                 }
                 return;
             }
+            
             else
             {
+                */
                 index = 0;
                 int newInstruction = numCompleteInstructions;
                 for (i = 0; i < Math.Min(5, numInsrtuctions - numCompleteInstructions); i++)
@@ -110,7 +171,9 @@ public class boardAnimation : MonoBehaviour, IBoardController {
                 anim.ResetTrigger("nextMove");
                 anim.SetTrigger("toFirst");
                 return;
+            /*
             }
+            */
         }
 
         anim.SetTrigger("nextMove");
@@ -128,5 +191,10 @@ public class boardAnimation : MonoBehaviour, IBoardController {
     public void ActivateAnimation(bool enable)
     {
         anim.enabled = enable;
+    }
+
+    public void UpdateDescription(string desc)
+    {
+        description.text = desc;
     }
 }

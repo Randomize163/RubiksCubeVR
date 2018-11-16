@@ -27,10 +27,10 @@ public class MenuButton : MonoBehaviour {
             return;
         }*/
 
-        triggered = true;
+        //triggered = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         triggered = true;
     }

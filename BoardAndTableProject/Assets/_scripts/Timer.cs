@@ -10,12 +10,11 @@ public class Timer : MonoBehaviour {
     private void Start()
     {
         GetComponent<TextMesh>().text = "00:00.00";
-        started = false;
     }
 
     void Update()
     {
-        if (started) return;
+        if (!started) return;
 
         float t = Time.time - startTime;
         string minutes = ((int)t / 60).ToString();
@@ -28,6 +27,7 @@ public class Timer : MonoBehaviour {
     {
         started = true;
         startTime = Time.time;
+        StartCoroutine(waiting(10));
     }
 
     public void StopTimer()
@@ -35,4 +35,9 @@ public class Timer : MonoBehaviour {
         started = false;
     }
 
+    IEnumerator waiting(float secods)
+    {
+        yield return new WaitForSeconds(secods);
+        started = false;
+    }
 }

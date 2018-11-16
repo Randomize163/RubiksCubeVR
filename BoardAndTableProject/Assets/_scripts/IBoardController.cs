@@ -13,5 +13,6 @@ namespace projectIntefaces
         void HighlightNextMove();
         void DisplayMessage(string message, Color c);
         void ActivateAnimation(bool enable);
+        void UpdateDescription(string desc);
     }
 }

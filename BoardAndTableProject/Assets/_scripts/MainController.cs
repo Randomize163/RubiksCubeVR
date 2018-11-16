@@ -17,11 +17,17 @@ public class MainController : MonoBehaviour {
     private GameObject exitButton;
     private GAME_STATE currentState;
     private IBoardController board;
-    private GameController game;
+    public GameController game;
+    private GameObject timer;
 
     // Use this for initialization
     void Start ()
     {
+        timer = GameObject.FindGameObjectWithTag("Timer");
+        timer.SetActive(false);
+
+        game = new GameController();
+
         board = (IBoardController)GameObject.FindGameObjectWithTag("Board").GetComponentInChildren(typeof(IBoardController));
         board.ActivateAnimation(false);
         board.DisplayMessage("Hello", new Color(1,1,0));
@@ -43,6 +49,7 @@ public class MainController : MonoBehaviour {
         {
             if(((MenuButton)studyingButton.GetComponent("MenuButton")).triggered)
             {
+                timer.SetActive(false);
                 currentState = GAME_STATE.STUDYING_STATE;
                 ((MenuButton)studyingButton.GetComponent("MenuButton")).triggered = false;
                 studyingButton.SetActive(false);
@@ -57,7 +64,10 @@ public class MainController : MonoBehaviour {
                 studyingButton.SetActive(false);
                 freestyleButton.SetActive(false);
                 exitButton.SetActive(true);
+                timer.SetActive(true);
+                ((Timer)timer.GetComponent(typeof(Timer))).StartTimer();
                 game.StartFreestyle();
+                ((Timer)timer.GetComponent(typeof(Timer))).StopTimer();
             }
 
         }
@@ -65,6 +75,7 @@ public class MainController : MonoBehaviour {
         {
             if (((MenuButton)exitButton.GetComponent("MenuButton")).triggered)
             {
+                timer.SetActive(false);
                 currentState = GAME_STATE.START_STATE;
                 ((MenuButton)exitButton.GetComponent("MenuButton")).triggered = false;
                 studyingButton.SetActive(true);
@@ -77,6 +88,7 @@ public class MainController : MonoBehaviour {
         {
             if (((MenuButton)exitButton.GetComponent("MenuButton")).triggered)
             {
+                timer.SetActive(false);
                 currentState = GAME_STATE.START_STATE;
                 ((MenuButton)exitButton.GetComponent("MenuButton")).triggered = false;
                 studyingButton.SetActive(true);

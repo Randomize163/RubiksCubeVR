@@ -73,7 +73,7 @@ public class MainController : MonoBehaviour {
                 studyingButton.SetActive(false);
                 freestyleButton.SetActive(false);
                 exitButton.SetActive(true);
-                keyboardButtons.SetActive(true);
+                keyboardButtons.SetActive(false);
                 finished = false;
                 game.StartLearning();
             }
@@ -143,6 +143,17 @@ public class MainController : MonoBehaviour {
                 finished = false;
                 game.StartFreestyle();
                 currentState = GAME_STATE.FREESTYLE_STATE;
+                return;
+            }
+            if (((MenuButton)exitButton.GetComponent("MenuButton")).triggered)
+            {
+                timer.SetActive(false);
+                currentState = GAME_STATE.START_STATE;
+                ((MenuButton)exitButton.GetComponent("MenuButton")).triggered = false;
+                studyingButton.SetActive(true);
+                freestyleButton.SetActive(true);
+                exitButton.SetActive(false);
+                game.Exit();
                 return;
             }
         }

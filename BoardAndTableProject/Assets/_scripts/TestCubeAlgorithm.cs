@@ -33,7 +33,7 @@ namespace projectIntefaces
             Random rnd = new Random();
             for(int i = 0; i < 7; i++)
             {
-                m.Add((Move)(rnd.Next(0, 5)));
+                m.Add((Move)(rnd.Next(0, 11)));
             }
             return m;
         }

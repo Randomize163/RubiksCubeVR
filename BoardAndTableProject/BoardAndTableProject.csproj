@@ -243,6 +243,8 @@
     <Compile Include="Assets\_scripts\ICubeAlgorithm.cs" />
     <Compile Include="Assets\_scripts\ICubeController.cs" />
     <Compile Include="Assets\_scripts\ICubeModel.cs" />
+    <Compile Include="Assets\_scripts\Keyboard.cs" />
+    <Compile Include="Assets\_scripts\KeyboardButton.cs" />
     <Compile Include="Assets\_scripts\LearningAC.cs" />
     <Compile Include="Assets\_scripts\MainController.cs" />
     <Compile Include="Assets\_scripts\MenuButton.cs" />

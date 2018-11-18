@@ -58,11 +58,12 @@ namespace projectIntefaces
 
         private void UpdateData()
         {
-            board.UpdateDescription(cubeAlgorithm.GetNextSolutionMovesDescription());
+            board.UpdateDescription(cubeAlgorithm.GetNextSolutionMovesDescription(), new Color(1,1,0));
 
             instructions = cubeAlgorithm.GetNextSolutionMoves();
             board.UpdateInstructions(instructions);
             currentInstr = 0;
         }
     }
+
 }

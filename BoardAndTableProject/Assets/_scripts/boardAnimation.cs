@@ -131,6 +131,7 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         for (int i = 0; i < Math.Min(5, numInsrtuctions); i++)
         {
             texts[i].text = instructions[i];
+            texts[i].color = new Color(1, 0, 0);
         }
     }
 
@@ -191,6 +192,14 @@ public class boardAnimation : MonoBehaviour, IBoardController {
     public void ActivateAnimation(bool enable)
     {
         anim.enabled = enable;
+    }
+
+    public void Clear()
+    {
+        foreach(Text t in texts)
+        {
+            t.text = "";
+        }
     }
 
     public void UpdateDescription(string desc)

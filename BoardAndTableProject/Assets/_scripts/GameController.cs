@@ -9,10 +9,11 @@ namespace projectIntefaces
     public class GameController
     {
         private IActionController actionController;
+        private IBoardController board;
 
         public GameController()
         {
-
+            board = (IBoardController)GameObject.FindGameObjectWithTag("Board").GetComponentInChildren(typeof(IBoardController));
         }
         public void StartGame()
         {
@@ -40,7 +41,13 @@ namespace projectIntefaces
 
         public void Exit()
         {
+            board.ActivateAnimation(false);
+            board.Clear();
+        }
 
+        public bool IsFinished()
+        {
+            return actionController.IsSolved();
         }
     }
 }

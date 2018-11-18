@@ -9,5 +9,6 @@ namespace projectIntefaces
     {
         void OnMove(Move m);
         void OnCubeGrabbed();
+        bool IsSolved();
     }
 }

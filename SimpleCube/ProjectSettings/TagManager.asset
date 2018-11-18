@@ -3,7 +3,30 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Rubik
+  - InnerPoint
+  - Cube
+  - LeftFace
+  - BackFace
+  - TopFace
+  - BottomFace
+  - RightFace
+  - FrontFace
+  - Slice
+  - Plane
+  - RotatorTopR
+  - RotatorBottom
+  - RotatorBottomR
+  - RotatorLeftR
+  - RotatorTop
+  - RotatorLeft
+  - RotatorRight
+  - RotatorRightR
+  - RotatorFront
+  - RotatorFrontR
+  - RotatorBack
+  - RotatorBackR
   layers:
   - Default
   - TransparentFX

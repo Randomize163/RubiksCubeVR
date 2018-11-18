@@ -10,66 +10,59 @@ namespace projectIntefaces
     {
         private ICubeAlgorithm cubeAlgorithm;
         private IBoardController board;
+        private ICubeController cubeController;
 
-        List<Move> moves;
-        int currentMove;
+        List<Move> instructions;
+        int currentInstr;
 
         public LearningAC()
         {
+            cubeAlgorithm = new TestCubeAlgorithm();
             board = (IBoardController)GameObject.FindGameObjectWithTag("Board").GetComponentInChildren(typeof(IBoardController));
-
-            //board.UpdateDescription(cubeAlgorithm.GetNextSolutionMovesDescription());!!!!!!!!!!!!
-            board.UpdateDescription("Solving Cross:");
-
-            //moves = cubeAlgorithm.GetNextSolutionMoves(); !!!!!!!!!!!
-            List<Move> movess = new List<Move>();
-            movess.Add(Move.B);
-            movess.Add(Move.D);
-            movess.Add(Move.F);
-            movess.Add(Move.L);
-            movess.Add(Move.U);
-            movess.Add(Move.B);
-            movess.Add(Move.D);
-
-            moves = movess;
-
-            board.UpdateInstructions(moves);
+            cubeController = new TestCubeController();
+            UpdateData();
             board.ActivateAnimation(true);
-
-            currentMove = 0;
         }
 
         public void OnMove(Move m)
         {
-            if(m != moves[currentMove])
+            cubeController.DoMove(m);
+
+            if (m != instructions[currentInstr])
             {
+                // TBD : what we are doing in case of incorrect move
+                cubeAlgorithm.DoMoves(cubeController.GetMoves());
+                UpdateData();
+
                 return;
             }
 
-            currentMove++;
+            currentInstr++;
             board.HighlightNextMove();
-
-            if(currentMove >= moves.Count)
+            
+            if(currentInstr >= instructions.Count)
             {
-                //board.UpdateDescription(cubeAlgorithm.GetNextSolutionMovesDescription());
-                board.UpdateDescription("Solving Corners :");
-                List<Move> movess = new List<Move>();
-                movess.Add(Move.U);
-                movess.Add(Move.L);
-                movess.Add(Move.F);
-                movess.Add(Move.D);
-                movess.Add(Move.B);
-                
-                moves = movess;
-
-                currentMove = 0;
-                board.UpdateInstructions(moves);
+                UpdateData();
             }
         }
 
         public void OnCubeGrabbed()
         {
 
+        }
+
+        public bool IsSolved()
+        {
+            return cubeAlgorithm.IsSolved();
+        }
+
+        private void UpdateData()
+        {
+            board.UpdateDescription(cubeAlgorithm.GetNextSolutionMovesDescription());
+
+            instructions = cubeAlgorithm.GetNextSolutionMoves();
+            board.UpdateInstructions(instructions);
+            currentInstr = 0;
         }
     }
 }

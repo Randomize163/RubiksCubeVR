@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &78856047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114402720792379706, guid: 9a90358930883ff4dafa68de25f41d09,
+    type: 2}
+  m_PrefabInternal: {fileID: 1162499169}
+  m_Script: {fileID: 11500000, guid: ef96692c29068ae45bc1b02322d0d278, type: 3}
 --- !u!1 &851843586
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 1770659627}
   runTest: 0
+  runSimpleHighlightTest: 0
+  runHighlightTest: 0
+  rotatorsController: {fileID: 78856047}
 --- !u!4 &1239612772
 Transform:
   m_ObjectHideFlags: 0

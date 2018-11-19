@@ -71,6 +71,7 @@
     <Compile Include="Assets\_scripts\SimpleCubeAlgorithm.cs" />
     <Compile Include="Assets\_scripts\SimpleCubeController.cs" />
     <Compile Include="Assets\_scripts\TestCubeModel.cs" />
+    <Compile Include="Assets\RotatorsController.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Randomize/Documents/Tmp/RubiksCubeVR/SimpleCube/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

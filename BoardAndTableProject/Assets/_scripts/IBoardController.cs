@@ -11,9 +11,10 @@ namespace projectIntefaces
     {
         void UpdateInstructions(List<Move> moves);
         void HighlightNextMove();
-        void DisplayMessage(string message, Color c);
+        void DisplayMessage(string message, Color color);
         void ActivateAnimation(bool enable);
-        void UpdateDescription(string desc);
+        void UpdateDescription(string desc, Color color);
+        //void AnimateDescription(bool enable);
         void Clear();
     }
 }

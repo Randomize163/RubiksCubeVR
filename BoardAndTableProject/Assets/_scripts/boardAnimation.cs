@@ -11,8 +11,8 @@ public class boardAnimation : MonoBehaviour, IBoardController {
     public int numInsrtuctions;    // number of instructions
     public int numCompleteInstructions; //
     List<string> instructions;
-    string done = "DONE!";
     public Animator anim;
+    //public Animator descriptionAnim;
     Text[] texts;
     Text description;
 
@@ -25,33 +25,14 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         index = 0;
         numCompleteInstructions = 0;
         anim = GetComponent<Animator>();
+        //descriptionAnim = GetComponentInChildren<Animator>();
         texts = GetComponentsInChildren<Text>();
         description = texts[5];
 
-        /*
-        texts[0].text = "L";
-        texts[1].text = "R";
-        texts[2].text = "D";
-        texts[3].text = "U";
-        texts[4].text = "F";
-        */
         instructions = new List<string>();
-        /*
-        instructions.Add("L");
-        instructions.Add("R");
-        instructions.Add("D");
-        instructions.Add("U");
-        instructions.Add("F");
-        instructions.Add("F");
-        instructions.Add("U");
-        instructions.Add("D");
-        instructions.Add("R");
-        instructions.Add("L");
-        instructions.Add("L");
-        instructions.Add("R");
-        instructions.Add("D");
-        */
 
+        //descriptionAnim.enabled = false;
+        anim.enabled = false;
         numInsrtuctions = instructions.Count;
 
     }
@@ -122,7 +103,9 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         instructions.Clear();
         foreach(Move m in moves)
         {
-            instructions.Add(m.ToString());
+            string temp;
+            temp =  (m < Move.LR ) ?  m.ToString() : ((m - 6).ToString() + "i");
+            instructions.Add(temp);
         }
         numInsrtuctions = instructions.Count;
         numCompleteInstructions = 0;
@@ -143,49 +126,31 @@ public class boardAnimation : MonoBehaviour, IBoardController {
 
         if (index >= 5 || numCompleteInstructions >= numInsrtuctions)
         {
-            /*
-            if (numCompleteInstructions >= numInsrtuctions)
+            index = 0;
+            int newInstruction = numCompleteInstructions;
+            for (i = 0; i < Math.Min(5, numInsrtuctions - numCompleteInstructions); i++)
             {
-                anim.enabled = false;
-                for (i = 0; i < 5; i++)
-                {
-                    texts[i].text = done[i].ToString();
-                    texts[i].color = new Color(0, 1, 0);
-                }
-                return;
+                texts[i].text = instructions[newInstruction++];
             }
-            
-            else
+            for (; i < 5; i++)
             {
-                */
-                index = 0;
-                int newInstruction = numCompleteInstructions;
-                for (i = 0; i < Math.Min(5, numInsrtuctions - numCompleteInstructions); i++)
-                {
-                    texts[i].text = instructions[newInstruction++];
-                }
-                for (; i < 5; i++)
-                {
-                    texts[i].text = " ";
+                texts[i].text = " ";
 
-                }
-                anim.ResetTrigger("nextMove");
-                anim.SetTrigger("toFirst");
-                return;
-            /*
             }
-            */
+            anim.ResetTrigger("nextMove");
+            anim.SetTrigger("toFirst");
+            return;
         }
 
         anim.SetTrigger("nextMove");
     }
 
-    public void DisplayMessage(string message, Color c)
+    public void DisplayMessage(string message, Color color)
     {
         for (int i = 0; i < Math.Min(5, message.Length); i++)
         {
             texts[i].text = message[i].ToString();
-            texts[i].color = c;
+            texts[i].color = color;
         }
     }
 
@@ -202,8 +167,14 @@ public class boardAnimation : MonoBehaviour, IBoardController {
         }
     }
 
-    public void UpdateDescription(string desc)
+    public void UpdateDescription(string desc, Color color)
     {
         description.text = desc;
+        description.color = color;
     }
+    /*
+    public void AnimateDescription(bool enable)
+    {
+        description.enabled = enable;
+    }*/
 }
